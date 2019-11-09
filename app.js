@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT;
 
-app.get('/', (req, res) => res.send('Hello World! from me'))
+app.get('/startnote', (req, res) => res.send('This starts a note session'));
+app.get('/endnote', (req, res) => res.send('This ends a note session'));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
