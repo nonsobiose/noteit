@@ -1,11 +1,12 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT;
-var hbs = require('express-handlebars');
+const path = require("path");
 
-app.set('view engine', 'hbs')
+app.set('view engine', "hbs");
+app.set('views', path.join(__dirname, "views"))
 app.get('/redirect', (req, res) => {
-    res.render('./redirect');
+    res.render('redirect');
 });
 app.get('/startnote', (req, res) => res.send('This starts a note session'));
 app.get('/endnote', (req, res) => res.send('This ends a note session'));
