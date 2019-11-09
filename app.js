@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT;
 
+app.get('/redirect', (req, res) => res.send('This redirects somewhere'));
 app.get('/startnote', (req, res) => res.send('This starts a note session'));
 app.get('/endnote', (req, res) => res.send('This ends a note session'));
 
