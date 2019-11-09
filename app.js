@@ -4,7 +4,11 @@ const port = process.env.PORT;
 const path = require("path");
 
 app.set('view engine', "hbs");
-app.set('views', path.join(__dirname, "views"))
+app.set('views', path.join(__dirname, "views"));
+
+app.get('/download', (req, res) => {
+    res.render('download');
+});
 app.get('/redirect', (req, res) => {
     res.render('redirect');
 });
