@@ -12,6 +12,8 @@ app.set('views', path.join(__dirname, "views"));
 app.use(bodyParser());
 
 const timeLogger = {};
+let accessToken = '';
+let channelId = '';
 
 app.get('/oauth', (req, res) => {
     res.render('add_to_slack');
@@ -20,8 +22,9 @@ app.get('/oauth', (req, res) => {
 app.get('/redirect', async (req, res) => {
     const response = await fetch( `https://slack.com/api/oauth.access?client_id=${process.env.CLIENTID}&client_secret=${process.env.CLIENTSECRET}&code=${req.query.code}`);
     const responseJson = await response.json();
+    accessToken = responseJson.access_token;
     console.log(responseJson);
-    res.ok()
+    res.send("You are ready to start taking note!")
 });
 
 app.post('/startnote', (req,res) => {
@@ -63,7 +66,7 @@ app.post('/startnote', (req,res) => {
     }
 });
 
-app.post('/endnote', (req,res) => {
+app.post('/endnote', async (req,res) => {
     const successMessage = {
         response_type: 'in_channel',
         blocks: [
@@ -91,6 +94,9 @@ app.post('/endnote', (req,res) => {
 
     if(timeLogger[req.body.team_id]){
         delete timeLogger[req.body.team_id];
+        const response = await fetch(`https://slack.com/api/conversations.history?token=${accessToken}&channel=${channelId}`);
+        const jsonResponse = await response.json();
+        console.log(jsonResponse);
         res.status(200).json(successMessage);
     }else{
         res.status(200).json(failureMessage);
