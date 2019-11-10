@@ -61,7 +61,7 @@ app.post('/startnote', (req,res) => {
         storedtimes[req.body.team_id] = currtime;
         res.status(200).json(successmessage);
     }
-})
+});
 
 app.post('/endnote', (req,res) => {
     const successmessage = {
