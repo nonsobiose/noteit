@@ -22,6 +22,7 @@ app.get('/redirect', async (req, res) => {
     const response = await fetch( `https://slack.com/api/oauth.access?client_id=${process.env.CLIENTID}&client_secret=${process.env.CLIENTSECRET}&code=${req.query.code}`);
     const responseJson = await response.json();
     accessToken = responseJson.access_token;
+    console.log("Access Token: " + accessToken);
     res.send("You are ready to start taking note!")
 });
 
@@ -94,6 +95,9 @@ app.post('/endnote', async (req,res) => {
         const response = await fetch(`https://slack.com/api/conversations.history?token=${accessToken}&channel=${req.body.channel_id}`);
         const jsonResponse = await response.json();
         const messages = jsonResponse.messages;
+        messages.forEach(message => {
+            console.log(message);
+        });
         const recentMessages = messages.filter(message => parseInt(message.ts) *1000 > timeLogger[req.body.team_id].getTime());
         const strippedMessages = recentMessages.map(recentMessage => recentMessage.text);
         strippedMessages.forEach(m => {
