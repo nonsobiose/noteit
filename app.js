@@ -9,22 +9,12 @@ app.set('view engine', "hbs");
 app.set('views', path.join(__dirname, "views"));
 
 app.get('/oauth', (req, res) => {
-    res.render('add_to_slack');
-});
-
-app.get('/add_to_slack', (req, res) => {
     res.render('download');
 });
 
 app.get('/redirect', async (req, res) => {
-    const response = await fetch( `https://slack.com/api/oauth.access&code=${req.query.code}&client_id=${process.env.CLIENTID}&client_secret=${process.env.CLIENTSECRET}redirect_uri=https://noteit-app.herokuapp.com/final`);
-    //res.send(response)
+    const response = await fetch( `https://slack.com/api/oauth.access&client_id=${process.env.CLIENTID}&client_secret=${process.env.CLIENTSECRET}code=${req.query.code}`);
     console.log(response)
-});
-
-app.get('/final', async (req, res) => {
-
-    console.log("We made it");
 });
 
 app.get('/startnote', (req, res) => res.send('This starts a note session'));
