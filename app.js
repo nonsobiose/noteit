@@ -13,7 +13,7 @@ app.get('/oauth', (req, res) => {
 });
 
 app.get('/redirect', async (req, res) => {
-    const response = await fetch( `https://slack.com/api/oauth.access&client_id=${process.env.CLIENTID}&client_secret=${process.env.CLIENTSECRET}code=${req.query.code}`);
+    const response = await fetch( `https://slack.com/api/oauth.access?client_id=${process.env.CLIENTID}&client_secret=${process.env.CLIENTSECRET}&code=${req.query.code}`);
     console.log(response)
 });
 
