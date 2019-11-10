@@ -95,16 +95,11 @@ app.post('/endnote', async (req,res) => {
         const response = await fetch(`https://slack.com/api/conversations.history?token=${accessToken}&channel=${req.body.channel_id}`);
         const jsonResponse = await response.json();
         const messages = jsonResponse.messages;
-        console.log("Channer Id: " +  req.body.channel_id);
-        messages.forEach(message => {
-            console.log(message);
-        });
         const recentMessages = messages.filter(message => parseInt(message.ts) *1000 > timeLogger[req.body.team_id].getTime());
         const strippedMessages = recentMessages.map(recentMessage => {
             return {
-                text: recentMessage.text ? recentMessage.text : "",
-                image: recentMessage.files ? recentMessage.files[0].url_private_download : "",
-                thread: []
+                text: recentMessage.text ? recentMessage.text : undefined,
+                image: recentMessage.files ? recentMessage.files[0].url_private_download : undefined,
             }
         });
         strippedMessages.forEach(m => {
