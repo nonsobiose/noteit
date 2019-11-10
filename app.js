@@ -19,7 +19,7 @@ app.get('/redirect', async (req, res) => {
     res.send("You have been successful" + responseJson)
 });
 
-app.get('/startnote', (req, res) => res.send('This starts a note session'));
-app.get('/endnote', (req, res) => res.send('This ends a note session'));
+app.post('/startnote', (req, res) => res.send('This starts a note session'));
+app.post('/endnote', (req, res) => res.send('This ends a note session'));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
