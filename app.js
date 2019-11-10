@@ -9,7 +9,7 @@ app.set('view engine', "hbs");
 app.set('views', path.join(__dirname, "views"));
 
 app.get('/oauth', (req, res) => {
-    res.render('download');
+    res.render('add_to_slack');
 });
 
 app.get('/redirect', async (req, res) => {
