@@ -95,6 +95,7 @@ app.post('/endnote', async (req,res) => {
         const response = await fetch(`https://slack.com/api/conversations.history?token=${accessToken}&channel=${req.body.channel_id}`);
         const jsonResponse = await response.json();
         const messages = jsonResponse.messages;
+        console.log("Channer Id: " +  req.body.channel_id);
         messages.forEach(message => {
             console.log(message);
         });
