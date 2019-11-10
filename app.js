@@ -100,7 +100,13 @@ app.post('/endnote', async (req,res) => {
             console.log(message);
         });
         const recentMessages = messages.filter(message => parseInt(message.ts) *1000 > timeLogger[req.body.team_id].getTime());
-        const strippedMessages = recentMessages.map(recentMessage => recentMessage.text);
+        const strippedMessages = recentMessages.map(recentMessage => {
+            return {
+                text: recentMessage.text ? recentMessage.text : "",
+                image: recentMessage.files[0].url_private_download ? recentMessage.files[0].url_private_download : "",
+                thread: []
+            }
+        });
         strippedMessages.forEach(m => {
            console.log(m);
         });
