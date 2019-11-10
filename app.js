@@ -91,7 +91,7 @@ app.post('/endnote', async (req,res) => {
         delete timeLogger[req.body.team_id];
         const response = await fetch(`https://slack.com/api/conversations.history?token=${req.body.token}&channel=${req.body.channel_Id}`);
         console.log(req.body.token);
-        console.log(req.body.channel_Id);
+        console.log(req.body);
         const jsonResponse = await response.json();
         console.log(jsonResponse);
         res.status(200).json(successMessage);
