@@ -22,6 +22,7 @@ app.get('/redirect', async (req, res) => {
     const response = await fetch( `https://slack.com/api/oauth.access?client_id=${process.env.CLIENTID}&client_secret=${process.env.CLIENTSECRET}&code=${req.query.code}`);
     const responseJson = await response.json();
     fs.writeFileSync('token.txt', responseJson.access_token);
+    console.log(responseJson.access_token);
     res.send("You are ready to start taking note!")
 });
 
