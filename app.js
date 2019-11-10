@@ -21,7 +21,7 @@ app.get('/oauth', (req, res) => {
 app.get('/redirect', async (req, res) => {
     const response = await fetch( `https://slack.com/api/oauth.access?client_id=${process.env.CLIENTID}&client_secret=${process.env.CLIENTSECRET}&code=${req.query.code}`);
     const responseJson = await response.json();
-    fs.writeFileSync('./resources/token.txt', responseJson.access_token);
+    fs.writeFileSync('token.txt', responseJson.access_token);
     res.send("You are ready to start taking note!")
 });
 
@@ -92,7 +92,7 @@ app.post('/endnote', async (req,res) => {
 
     if(timeLogger[req.body.team_id]){
         delete timeLogger[req.body.team_id];
-        const accessToken = fs.readFileSync('./resources/token.txt', "utf8");
+        const accessToken = fs.readFileSync('token.txt', "utf8");
         const response = await fetch(`https://slack.com/api/conversations.history?token=${accessToken}&channel=${req.body.channel_id}`);
         console.log(req.body.token);
         console.log(req.body);
