@@ -12,6 +12,7 @@ app.set('views', path.join(__dirname, "views"));
 app.use(bodyParser());
 
 const timeLogger = {};
+let accessToken = '';
 
 app.get('/oauth', (req, res) => {
     res.render('add_to_slack');
@@ -19,6 +20,8 @@ app.get('/oauth', (req, res) => {
 
 app.get('/redirect', async (req, res) => {
     const response = await fetch( `https://slack.com/api/oauth.access?client_id=${process.env.CLIENTID}&client_secret=${process.env.CLIENTSECRET}&code=${req.query.code}`);
+    const responseJson = await response.json();
+    accessToken = responseJson.access_token;
     res.send("You are ready to start taking note!")
 });
 
@@ -89,7 +92,7 @@ app.post('/endnote', async (req,res) => {
 
     if(timeLogger[req.body.team_id]){
         delete timeLogger[req.body.team_id];
-        const response = await fetch(`https://slack.com/api/conversations.history?token=${req.body.token}&channel=${req.body.channel_Id}`);
+        const response = await fetch(`https://slack.com/api/conversations.history?token=${accessToken}&channel=${req.body.channel_id}`);
         console.log(req.body.token);
         console.log(req.body);
         const jsonResponse = await response.json();
