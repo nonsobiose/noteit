@@ -14,7 +14,8 @@ app.get('/oauth', (req, res) => {
 
 app.get('/redirect', async (req, res) => {
     const response = await fetch( `https://slack.com/api/oauth.access?client_id=${process.env.CLIENTID}&client_secret=${process.env.CLIENTSECRET}&code=${req.query.code}`);
-    res.send("You have been successfull")
+    console.log(response);
+    res.send("You have been successful")
 });
 
 app.get('/startnote', (req, res) => res.send('This starts a note session'));
