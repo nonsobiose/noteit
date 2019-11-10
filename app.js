@@ -89,9 +89,9 @@ app.post('/endnote', async (req,res) => {
 
     if(timeLogger[req.body.team_id]){
         delete timeLogger[req.body.team_id];
-        const response = await fetch(`https://slack.com/api/conversations.history?token=${req.query.token}&channel=${req.query.channelId}`);
-        console.log(req.query.token);
-        console.log(req.query.channelId);
+        const response = await fetch(`https://slack.com/api/conversations.history?token=${req.body.token}&channel=${req.body.channelId}`);
+        console.log(req.body.token);
+        console.log(req.body.channelId);
         const jsonResponse = await response.json();
         console.log(jsonResponse);
         res.status(200).json(successMessage);
