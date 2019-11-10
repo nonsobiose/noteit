@@ -64,7 +64,37 @@ app.post('/startnote', (req,res) => {
 })
 
 app.post('/endnote', (req,res) => {
-    //Pull all the messages
+    const successmessage = {
+        response_type: 'in_channel',
+        blocks: [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "*Lecture successfully stopped*"
+                }
+            }
+        ]
+    };
+    const failuremessage = {
+        response_type: 'in_channel',
+        blocks: [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "*No Lecture is being recorded!*"
+                }
+            }
+        ]
+    };
+
+    if(storedtimes[req.body.team_id]){
+        delete storedtimes[req.body.team_id];
+        res.status(200).json(successmessage);
+    }else{
+        res.status(200).json(failuremessage);
+    }
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
