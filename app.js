@@ -17,7 +17,7 @@ app.get('/add_to_slack', (req, res) => {
 });
 
 app.get('/redirect', async (req, res) => {
-    const response = await fetch( `https://slack.com/api/oauth.access&code=${req.query.code}&client_id=${process.env.CLIENTID}&client_secret=${process.env.CLIENTSECRET}`);
+    const response = await fetch( `https://slack.com/api/oauth.access&code=${req.query.code}&client_id=${process.env.CLIENTID}&client_secret=${process.env.CLIENTSECRET}redirect_uri=https://noteit-app.herokuapp.com/redirect`);
     //res.send(response)
     console.log(response)
 });
