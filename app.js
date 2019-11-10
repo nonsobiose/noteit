@@ -97,7 +97,10 @@ app.post('/endnote', async (req,res) => {
         const messages = jsonResponse.messages;
         console.log(messages.length + "");
         const recentMessages = messages.filter(message => parseInt(message.ts) > timeLogger[req.body.team_id].getTime());
-        console.log(timeLogger[req.body.team_id]);
+        console.log(timeLogger[req.body.team_id].getTime());
+        console.log(typeof(timeLogger[req.body.team_id].getTime()));
+        console.log(parseInt(messages[0].ts));
+        console.log(timeLogger[req.body.team_id].getTime() < parseInt(messages[0].ts));
         console.log("Time loger" + message.ts);
         console.log(recentMessages.length + "");
         const strippedMessages = recentMessages.map(recentMessage => recentMessage.text);
