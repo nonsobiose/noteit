@@ -4,9 +4,11 @@ require('dotenv').config();
 const port = process.env.PORT;
 const path = require("path");
 const fetch = require("node-fetch");
+const bodyParser = require("body-parser");
 
 app.set('view engine', "hbs");
 app.set('views', path.join(__dirname, "views"));
+app.use(bodyParser());
 
 storedtimes = {};
 
