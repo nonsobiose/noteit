@@ -8,6 +8,8 @@ const fetch = require("node-fetch");
 app.set('view engine', "hbs");
 app.set('views', path.join(__dirname, "views"));
 
+storedtimes = {};
+
 app.get('/oauth', (req, res) => {
     res.render('add_to_slack');
 });
@@ -19,7 +21,48 @@ app.get('/redirect', async (req, res) => {
     res.send("You have been successful" + responseJson)
 });
 
-app.post('/startnote', (req, res) => res.send('This starts a note session'));
-app.post('/endnote', (req, res) => res.send('This ends a note session'));
+app.post('/startnote', (req,res) => {
+    console.log('hey')
+    console.log(req.body.team_id);
+    console.log(req.body.team_domain);
+    currtime = new Date(Date.now());
+
+    const successmessage = {
+        response_type: 'in_channel',
+        blocks: [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "Your lecture has been recorded at time *" + currtime.toLocaleDateString() + ".*"
+                }
+            }
+        ]
+    };
+    const failuremessage = {
+        response_type: 'in_channel',
+        blocks: [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "*You are already recording a lecture!*"
+                }
+            }
+        ]
+    };
+
+
+    if(storedtimes[req.body.team_id]){
+        res.status(200).json(failuremessage);
+    }else{
+        storedtimes[req.body.team_id] = currtime;
+        res.status(200).json(successmessage);
+    }
+})
+
+app.post('/endnote', (req,res) => {
+    //Pull all the messages
+})
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
