@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT;
 const path = require("path");
+const fetch = require("node-fetch");
 
 app.set('view engine', "hbs");
 app.set('views', path.join(__dirname, "views"));
