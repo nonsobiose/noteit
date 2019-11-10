@@ -103,7 +103,7 @@ app.post('/endnote', async (req,res) => {
         const strippedMessages = recentMessages.map(recentMessage => {
             return {
                 text: recentMessage.text ? recentMessage.text : "",
-                image: recentMessage.files.length > 0 ? recentMessage.files[0].url_private_download : "",
+                image: recentMessage.files ? recentMessage.files[0].url_private_download : "",
                 thread: []
             }
         });
