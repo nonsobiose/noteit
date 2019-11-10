@@ -4,14 +4,14 @@ const path = require("path");
 const fetch = require("node-fetch");
 const bodyParser = require("body-parser");
 const port = process.env.PORT;
-import moment from 'moment';
+const moment = require('moment');
 require('dotenv').config();
 
 app.set('view engine', "hbs");
 app.set('views', path.join(__dirname, "views"));
 app.use(bodyParser());
 
-const storedtimes = {};
+const timeLogger = {};
 
 app.get('/oauth', (req, res) => {
     res.render('add_to_slack');
@@ -55,10 +55,10 @@ app.post('/startnote', (req,res) => {
     };
 
 
-    if(storedtimes[req.body.team_id]){
+    if(timeLogger[req.body.team_id]){
         res.status(200).json(failureMessage);
     }else{
-        storedtimes[req.body.team_id] = timestamp;
+        timeLogger[req.body.team_id] = timestamp;
         res.status(200).json(successMessage);
     }
 });
@@ -89,8 +89,8 @@ app.post('/endnote', (req,res) => {
         ]
     };
 
-    if(storedtimes[req.body.team_id]){
-        delete storedtimes[req.body.team_id];
+    if(timeLogger[req.body.team_id]){
+        delete timeLogger[req.body.team_id];
         res.status(200).json(successMessage);
     }else{
         res.status(200).json(failureMessage);
