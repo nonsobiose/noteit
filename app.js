@@ -5,7 +5,6 @@ const fetch = require("node-fetch");
 const bodyParser = require("body-parser");
 const port = process.env.PORT;
 const moment = require('moment');
-const fs = require('fs');
 require('dotenv').config();
 
 app.set('view engine', "hbs");
